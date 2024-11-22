@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update destroy publish ]
 
   def index
     @posts = Post.all
@@ -47,6 +47,14 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to posts_path, status: :see_other, notice: "Post was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def publish
+    @post.update(created_at: Time.current)
+
+    respond_to do |format|
+      format.js
     end
   end
 
